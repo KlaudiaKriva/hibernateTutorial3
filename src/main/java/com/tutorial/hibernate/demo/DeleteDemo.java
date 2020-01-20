@@ -1,30 +1,36 @@
 package com.tutorial.hibernate.demo;
 
-import com.tutorial.demo.entity.Student;
+import com.tutorial.demo.entity.Instructor;
+import com.tutorial.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-public class CreateStudentDemo {
+public class DeleteDemo {
 
     public static void main(String[] args) {
 
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Student.class)
+                .addAnnotatedClass(Instructor.class)
+                .addAnnotatedClass(InstructorDetail.class)
                 .buildSessionFactory();
 
         Session session = factory.getCurrentSession();
 
         try {
-            System.out.println("Creating new student object...");
-            Student tempStudent = new Student("Mima", "Vargockova", "mima@gmail.com");
+
+            Instructor tempInstruction = new Instructor("Mim", "Varg", "mim@gmail.com");
+
+            InstructorDetail tempInstructorDetail = new InstructorDetail("youtubeMim", "drawing");
+
+            tempInstruction.setInstructorDetail(tempInstructorDetail);
 
             session.beginTransaction();
 
-            System.out.println("Saving the student...");
-            session.save(tempStudent);
+            System.out.println("saving instructor: " + tempInstruction);
+            session.save(tempInstruction);
 
             session.getTransaction().commit();
 
