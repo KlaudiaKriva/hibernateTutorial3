@@ -20,20 +20,17 @@ public class DeleteDemo {
         Session session = factory.getCurrentSession();
 
         try {
-
-            Instructor tempInstruction = new Instructor("Mim", "Varg", "mim@gmail.com");
-
-            InstructorDetail tempInstructorDetail = new InstructorDetail("youtubeMim", "drawing");
-
-            tempInstruction.setInstructorDetail(tempInstructorDetail);
-
             session.beginTransaction();
+            int theId=1;
 
-            System.out.println("saving instructor: " + tempInstruction);
-            session.save(tempInstruction);
+            Instructor tempInstruction = (Instructor) session.get(Instructor.class, theId);
+            System.out.println("found instructor: " + tempInstruction);
+            if (tempInstruction != null) {
+                System.out.println("deleting: " + tempInstruction);
+                session.delete(tempInstruction);
+            }
 
             session.getTransaction().commit();
-
             System.out.println("Done!");
         }
         finally {
