@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-public class DeleteDemo {
+public class GetInstructorDetailDemo {
 
     public static void main(String[] args) {
 
@@ -21,19 +21,19 @@ public class DeleteDemo {
 
         try {
             session.beginTransaction();
-            int theId=1;
 
-            Instructor tempInstruction = (Instructor) session.get(Instructor.class, theId);
-            System.out.println("found instructor: " + tempInstruction);
-            if (tempInstruction != null) {
-                System.out.println("deleting: " + tempInstruction);
-                session.delete(tempInstruction);
-            }
+            int theId = 2;
+            InstructorDetail tempInstructorDetail = (InstructorDetail) session.get(InstructorDetail.class, theId);
+            System.out.println("tempInstructorDetail: " + tempInstructorDetail);
+            System.out.println("the associated instructor: "+ tempInstructorDetail.getInstructor());
 
             session.getTransaction().commit();
             System.out.println("Done!");
+        } catch (Exception e){
+            e.printStackTrace();
         }
         finally {
+            session.close();
             factory.close();
         }
 
